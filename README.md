@@ -272,6 +272,71 @@ docker-compose run --rm api npm run build
 docker-compose up
 ```
 
+## How AI Assisted in Development
+
+I leveraged AI (Claude) for several aspects of this project, but always within a controlled framework where I maintained architectural integrity and final decision-making:
+
+1. **Component Structure Assistance**: After establishing the core architecture and building the City module as a foundation, I used AI to help with initial scaffolding of components like the WeatherMap and API calls. For example, with the WeatherMap component, AI provided a basic structure, but it used outdated documentation that required significant reworking.
+
+2. **OpenMeteo Integration**: AI helped draft the initial OpenMeteo service integration, but I manually enhanced it to use the official OpenMeteo TypeScript library and restructured the interfaces according to my preferred pattern of keeping interfaces in separate files.
+
+3. **Test Development**: AI assisted in writing some of the test cases, particularly for more routine testing scenarios, allowing me to focus on complex testing logic.
+
+4. **Documentation**: AI helped draft documentation, including README files, which I then reviewed and refined to ensure accuracy and alignment with project goals.
+
+In all cases, AI output was treated as a first draft requiring substantial human review and refinement. The architecture, design decisions, and final implementation were all driven by my vision and expertise.
+
+## Technical Choices & Build Optimization
+
+### Build Process
+I implemented a two-step build process for optimal balance between development experience and production performance:
+
+1. **TypeScript Compilation**: First pass uses the TypeScript compiler to preserve type information and decorator metadata essential for frameworks like TypeGraphQL.
+
+2. **esbuild Optimization**: Second pass uses esbuild to minify and optimize JavaScript, with careful handling of GraphQL schema files to prevent type name conflicts.
+
+This approach provides significant benefits:
+- Preserves full type safety and reflection during development
+- Reduces bundle size and improves runtime performance in production
+- Maintains compatibility with decorator-based libraries
+
+### Type-First Development
+Throughout the project, I emphasized type safety by:
+- Using TypeGraphQL for code-first schema generation
+- Maintaining consistent type definitions across layers
+- Leveraging TypeScript's advanced features for domain modeling
+
+## Omissions & Trade-offs
+
+### Intentional Omissions
+1. **User Authentication**: Though planned for future implementation, I prioritized core domain functionality over auth infrastructure.
+   
+2. **Comprehensive Error Handling**: The current implementation has basic error handling. A production system would benefit from a more robust error handling framework with detailed logging.
+
+3. **Full Mobile Responsiveness**: Focused on desktop-first experience with basic mobile support rather than comprehensive mobile optimization.
+
+4. **End-to-End Testing**: Implemented unit and integration tests, but omitted E2E tests to prioritize core functionality delivery.
+
+### Engineering Trade-offs
+
+1. **In-Memory Cache vs Redis**: Used Node-Cache for simplicity, though a production system would benefit from Redis for distributed caching.
+
+2. **TypeGraphQL vs SDL-First**: Selected TypeGraphQL for code-first schema development despite its learning curve, as it offers better TypeScript integration.
+
+3. **Domain Complexity**: Implemented a full DDD architecture, accepting the overhead because it demonstrates architectural skills, even though a simpler CRUD approach might have been sufficient for this specific use case.
+
+4. **Build Process**: The two-step build process (TypeScript + esbuild) adds complexity but was necessary to handle GraphQL schema requirements while still optimizing performance.
+
+### Future Improvements
+
+If continuing development, I would address:
+
+1. Add proper handling of city not found case with user-friendly messaging
+2. Implement more sophisticated weather data interpretation
+3. Add more robust error boundary handling in the React application
+4. Improve test coverage, especially for edge cases
+5. Add feature flags for gradual rollout of new capabilities
+
 ## Conclusion
 
 This project demonstrates my approach to software engineering with a focus on:
